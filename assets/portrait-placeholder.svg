@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Mark Bockrath portrait placeholder">
+  <defs>
+    <linearGradient id="ppBg" x1="0" y1="0" x2="800" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#11141B"/><stop offset="1" stop-color="#0A0C10"/>
+    </linearGradient>
+    <linearGradient id="ppRing" x1="200" y1="280" x2="600" y2="640" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00E5FF"/><stop offset="0.5" stop-color="#7C3AED"/><stop offset="1" stop-color="#FF3D8A"/>
+    </linearGradient>
+    <radialGradient id="ppGlow" cx="0.5" cy="0.4" r="0.6"><stop offset="0" stop-color="#7C3AED" stop-opacity="0.35"/><stop offset="1" stop-color="#7C3AED" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#ppBg)"/>
+  <rect width="800" height="1000" fill="url(#ppGlow)"/>
+  <g transform="translate(400,430)" stroke="url(#ppRing)" stroke-width="10" fill="none" opacity="0.85">
+    <circle cx="0" cy="-40" r="86"/>
+    <path d="M-150,180 C-150,40 -80,10 0,10 C80,10 150,40 150,180" stroke-linecap="round"/>
+  </g>
+  <text x="400" y="760" text-anchor="middle" font-family="'Space Grotesk','Inter',sans-serif" font-size="42" font-weight="700" fill="#EDF1F7">Mark Bockrath</text>
+  <text x="400" y="806" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="18" letter-spacing="3" fill="#00E5FF">FOUNDER &amp; CEO</text>
+  <text x="400" y="858" text-anchor="middle" font-family="'Inter',sans-serif" font-size="16" font-weight="300" fill="#6b7280">Photo loading…</text>
+</svg>

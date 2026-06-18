@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="MAB AI Strategies mark">
+  <defs>
+    <linearGradient id="mabSpectrum" x1="6" y1="10" x2="58" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00E5FF"/>
+      <stop offset="0.32" stop-color="#7C3AED"/>
+      <stop offset="0.62" stop-color="#FF3D8A"/>
+      <stop offset="0.82" stop-color="#FFD54A"/>
+      <stop offset="1" stop-color="#AEEA00"/>
+    </linearGradient>
+    <radialGradient id="mabCore" cx="0.4" cy="0.34" r="0.75">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="0.25" stop-color="#9becff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#00E5FF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="mabGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="1.4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- iridescent torus ribbon (tilted ring) echoing the hero -->
+  <g filter="url(#mabGlow)">
+    <ellipse cx="32" cy="32" rx="23" ry="13" transform="rotate(-32 32 32)"
+             stroke="url(#mabSpectrum)" stroke-width="4.5" stroke-linecap="round"/>
+    <ellipse cx="32" cy="32" rx="13.5" ry="23" transform="rotate(-32 32 32)"
+             stroke="url(#mabSpectrum)" stroke-width="2.4" stroke-opacity="0.55"/>
+  </g>
+  <!-- gravitational core -->
+  <circle cx="29" cy="28" r="9" fill="url(#mabCore)"/>
+  <!-- orbiting agent node -->
+  <circle cx="51.5" cy="20" r="2.6" fill="#AEEA00"/>
+  <circle cx="51.5" cy="20" r="5" fill="#AEEA00" fill-opacity="0.18"/>
+</svg>
