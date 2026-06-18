@@ -54,10 +54,12 @@ fractional Chief AI Officer $5K–$10K/mo, single-agent builds $1.5K–$5K) and 
 
 ## Configuration
 
-- **Contact form** — in `contact.html`, set `CONTACT_ENDPOINT` to a Formspree
-  (`https://formspree.io/f/XXXX`) or Make/n8n/Zapier webhook URL to deliver submissions
-  directly. While blank, the form opens the visitor's email client with a pre-filled
-  message, so it always works.
+- **Contact form** — wired for **Formspree**. In `js/contact.js`, set `FORMSPREE_ID`
+  to the 8-character form ID from your Formspree endpoint (`https://formspree.io/f/<ID>`;
+  sign up at formspree.io with mark@mabaistrategies.com). Until a real ID is set, the form
+  falls back to opening the visitor's email client pre-filled to `CONTACT_EMAIL`, so it
+  never silently fails. A honeypot field filters basic spam. (You can point `CONTACT_ENDPOINT`
+  at a Make/n8n webhook instead if you prefer.)
 - **Calendar** — booking links point to `https://calendar.app.google/kuwKF2VrDuyvdfN9A`.
 - **Chatbot logging** — optional webhook block is commented in `js/chatbot.js → sendMessage()`.
 
@@ -72,9 +74,8 @@ fractional Chief AI Officer $5K–$10K/mo, single-agent builds $1.5K–$5K) and 
 
 ## Pre-launch checklist (before Vercel)
 
-1. **Headshot** — drop the real founder photo at `media/mark-bockrath.jpg` (the About page
-   falls back to a branded placeholder until it's present).
-2. **Contact delivery** — set `CONTACT_ENDPOINT` if you want inbox/CRM delivery instead of mailto.
+1. **Headshot** — ✅ in place at `media/mark-bockrath.jpg` (574×728). Swap the file if you want a different shot.
+2. **Contact delivery** — set `FORMSPREE_ID` in `js/contact.js` for inbox delivery (otherwise the form uses the mailto fallback).
 3. **Verify stats** — confirm public claims ($12M+ impact, 250+ solutions, 16+ years) are accurate.
 4. **Analytics** _(optional)_ — add a Plausible/GA4 snippet to each `<head>`.
 5. **Share image** _(optional)_ — `assets/og-image.svg` is provided; export a PNG/JPG version

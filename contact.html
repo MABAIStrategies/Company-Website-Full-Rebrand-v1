@@ -134,6 +134,11 @@
       <!-- ── CONTACT FORM ── -->
       <div class="contact-panel active" id="panel-contact">
         <form id="contact-form" novalidate>
+          <!-- Honeypot: hidden from humans; bots that fill it are silently dropped -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:0;overflow:hidden;">
+            <label for="cf-website">Leave this field empty</label>
+            <input id="cf-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="cf-name">Full Name *</label>

@@ -98,7 +98,7 @@ jobs:
           python3 - <<'PY'
           import glob, re, os, sys
           # Files allowed to be absent for now (provided just before launch)
-          PENDING = {'media/mark-bockrath.jpg'}
+          PENDING = set()
           pat = re.compile(r'(?:src|href)\s*=\s*"([^"]+)"')
           missing=[]
           for f in glob.glob('*.html') + glob.glob('css/*.css'):

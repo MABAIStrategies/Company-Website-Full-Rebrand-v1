@@ -9,15 +9,21 @@ window.__MINI_TORUS__ = { canvasId:'mini-torus', particleCount:900, scale:0.48 }
 
 document.addEventListener('DOMContentLoaded', () => {
   /* ─────────────────────────────────────────────────────────────
-     CONTACT FORM DELIVERY
-     Set CONTACT_ENDPOINT to a Formspree endpoint (https://formspree.io/f/XXXXXXX)
-     or a Make.com / n8n / Zapier webhook URL to deliver submissions directly.
-     While it is left blank, the form opens the visitor's email client with a
-     pre-filled message — so submissions always have a working path and never
-     silently fail.
+     CONTACT FORM DELIVERY — Formspree
+     1. Create a free form at https://formspree.io (sign up with
+        mark@mabaistrategies.com so submissions land in your inbox).
+     2. Formspree gives you an endpoint like https://formspree.io/f/abcdwxyz
+        — paste the 8-character form ID (the "abcdwxyz" part) below.
+     Until a real ID is set, the form falls back to opening the visitor's
+     email client pre-filled to CONTACT_EMAIL, so it never silently fails.
+     (You can also point CONTACT_ENDPOINT at a Make.com / n8n webhook instead.)
      ───────────────────────────────────────────────────────────── */
-  const CONTACT_ENDPOINT = '';
-  const CONTACT_EMAIL    = 'mark@mabaistrategies.com';
+  const FORMSPREE_ID  = 'YOUR_FORM_ID';
+  const CONTACT_EMAIL = 'mark@mabaistrategies.com';
+  const CONTACT_ENDPOINT =
+    (FORMSPREE_ID && FORMSPREE_ID !== 'YOUR_FORM_ID')
+      ? 'https://formspree.io/f/' + FORMSPREE_ID
+      : '';
 
   const form = document.getElementById('contact-form');
   if (!form) return;
@@ -39,12 +45,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const label  = btn.querySelector('.btn-label');
     const origLabel = label.innerHTML;
 
+    // Honeypot — bots fill hidden fields; humans never see it.
+    const honey = form.querySelector('#cf-website');
+    if (honey && honey.value) { return; }
+
     const payload = {
       name:    form.querySelector('#cf-name').value.trim(),
       email:   form.querySelector('#cf-email').value.trim(),
       company: form.querySelector('#cf-company').value.trim(),
       service: form.querySelector('#cf-service').value,
       message: form.querySelector('#cf-message').value.trim(),
+      _subject: 'MAB AI Website — new inquiry',
       source:  'MAB AI Website — Contact Page',
       ts:      new Date().toISOString()
     };
