@@ -187,12 +187,23 @@
   });
 
   /* ───────────── 11 · ACTIVE NAV LINK HIGHLIGHT ───────────── */
+  // Exclude the CTA button (.nav-link--cta) — it has dark text on a bright
+  // background, so forcing it to #fff would create an illegible contrast.
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-link').forEach(link => {
+  document.querySelectorAll('.nav-link:not(.nav-link--cta)').forEach(link => {
     const href = link.getAttribute('href');
     if (href && href.split('?')[0] === currentPage) {
       link.style.color = '#fff';
     }
+  });
+
+  /* ───────────── 11b · IMAGE FALLBACK (externalized from inline onerror for stricter CSP) ───────────── */
+  document.querySelectorAll('img[data-fallback]').forEach((img) => {
+    const fallback = img.getAttribute('data-fallback');
+    const swap = () => { if (img.src.indexOf(fallback) === -1) img.src = fallback; };
+    img.addEventListener('error', swap, { once: true });
+    // Catch images that already failed before this handler attached
+    if (img.complete && img.naturalWidth === 0) swap();
   });
 
   /* ───────────── 12 · MOTION-BAND VIDEO — play only in view, honor reduced-motion ───────────── */

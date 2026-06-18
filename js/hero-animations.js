@@ -568,7 +568,9 @@
       }
     }
     initCols(cvs.W || 800);
-    window.addEventListener("resize", () => initCols(cvs.W));
+    // Read the live layout width on resize so column count never uses a stale
+    // value (cvs.W is updated by setupCanvas's own resize listener, ordering-dependent).
+    window.addEventListener("resize", () => initCols(cvs.el.getBoundingClientRect().width));
 
     // Shield geometry (drawn with canvas paths)
     function drawShield(ctx, cx, cy, size, alpha, frame) {
