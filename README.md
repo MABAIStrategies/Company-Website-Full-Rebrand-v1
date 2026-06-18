@@ -61,7 +61,10 @@ fractional Chief AI Officer $5K–$10K/mo, single-agent builds $1.5K–$5K) and 
   never silently fails. A honeypot field filters basic spam. (You can point `CONTACT_ENDPOINT`
   at a Make/n8n webhook instead if you prefer.)
 - **Calendar** — booking links point to `https://calendar.app.google/kuwKF2VrDuyvdfN9A`.
-- **Chatbot logging** — optional webhook block is commented in `js/chatbot.js → sendMessage()`.
+- **Chatbot logging** — set `CHAT_LOG_ENDPOINT` in `js/chatbot.js` to a webhook
+  (Zapier Catch Hook, Make.com, or n8n) to capture every exchange. It POSTs
+  `{ ts, page, message, reply, session }` — a 5-column row (Timestamp · Page ·
+  Visitor Message · Bot Reply · Session ID). Empty = off.
 
 ## Security notes
 

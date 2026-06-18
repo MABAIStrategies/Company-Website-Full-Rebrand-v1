@@ -5,6 +5,20 @@
 (function () {
   "use strict";
 
+  /* ────────── CONVERSATION LOGGING ──────────
+     Set CHAT_LOG_ENDPOINT to a webhook (Zapier Catch Hook, Make.com, or n8n) to
+     capture every exchange for follow-up / outreach. Empty string = logging off.
+     Payload matches a 5-column sheet: Timestamp · Page · Visitor Message · Bot Reply · Session ID. */
+  const CHAT_LOG_ENDPOINT = '';
+  const CHAT_SESSION = (function () {
+    try {
+      let s = sessionStorage.getItem('cb_sid');
+      if (!s) { s = 'cb_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); sessionStorage.setItem('cb_sid', s); }
+      return s;
+    } catch (e) { return 'cb_nostore'; }
+  })();
+  const stripTags = (html) => { const d = document.createElement('div'); d.innerHTML = html; return (d.textContent || '').replace(/\s+/g, ' ').trim(); };
+
   /* ────────── KNOWLEDGE BASE (stateless FAQ engine) ────────── */
   const KB = [
     {
@@ -191,17 +205,26 @@
     showTyping();
     await new Promise(r => setTimeout(r, 600 + Math.random() * 500));
     hideTyping();
-    appendMsg(findAnswer(text), 'bot');
+    const answer = findAnswer(text);
+    appendMsg(answer, 'bot');
 
-    /* Optional: forward to n8n webhook for logging / human handoff
-    try {
-      await fetch('YOUR_WEBHOOK_URL_HERE', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ message: text, ts: new Date().toISOString(), source: window.location.pathname })
-      });
-    } catch(e) {} // silent fail
-    */
+    // Forward the exchange to the logging webhook (if configured). Fire-and-forget.
+    if (CHAT_LOG_ENDPOINT) {
+      try {
+        fetch(CHAT_LOG_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ts:      new Date().toISOString(),
+            page:    window.location.pathname,
+            message: text,
+            reply:   stripTags(answer),
+            session: CHAT_SESSION
+          }),
+          keepalive: true
+        }).catch(() => {}); // silent fail — never block the UI
+      } catch (e) { /* no-op */ }
+    }
   }
 
   function greet() {
