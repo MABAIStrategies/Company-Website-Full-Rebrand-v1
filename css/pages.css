@@ -559,3 +559,42 @@ option{ background:#1a1d26; }
   .tier-grid{ grid-template-columns:1fr; }
   .svc-detail-grid{ grid-template-columns:1fr; }
 }
+
+/* ═══════════ MOBILE REFINEMENTS ═══════════ */
+@media (max-width: 768px){
+  /* Tighter vertical rhythm on phones (ID'd sections keep their own padding) */
+  section{ padding-top:84px; padding-bottom:84px; }
+  #convergence-section{ padding-top:108px; padding-bottom:108px; }
+  .section-head{ margin-bottom:54px; }
+  .page-hero{ padding-top:124px; min-height:36vh; }
+
+  /* Every card grid → single column (kills horizontal overflow from minmax minimums).
+     !important also overrides the inline 1fr 1fr on the About mission/vision grid. */
+  .core-grid, .oneoff-grid, .svc-detail-grid, .tier-grid{ grid-template-columns:1fr !important; }
+  .proof-grid{ grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); }
+
+  /* Prevent iOS Safari auto-zoom on input focus (requires >=16px) */
+  .form-input, .form-select, .form-textarea, #cb-input{ font-size:16px; }
+
+  /* Motion bands a touch shorter so the caption isn't dwarfed */
+  .motion-band{ min-height:clamp(260px,58vw,360px); }
+  .motion-band__copy{ padding:26px 22px; }
+
+  /* Chatbot: full-width sheet that fits short viewports */
+  #chatbot-trigger{ bottom:20px; right:18px; width:56px; height:56px; }
+  #chatbot-panel{
+    left:14px; right:14px; bottom:88px; width:auto;
+    max-height:calc(100vh - 120px);
+    max-height:calc(100dvh - 120px);
+  }
+  .cb-body{ max-height:none; }
+}
+
+@media (max-width: 440px){
+  /* Full-width CTAs + a bit more breathing room inside cards */
+  .hero-cta-row{ flex-direction:column; width:100%; }
+  .hero-cta-row > a, .btn-convergence, .btn-convergence--xl, .btn-ghost{ width:100%; justify-content:center; }
+  .tier-card, .oneoff-card, .svc-detail-card, .core-card{ padding-left:24px; padding-right:24px; }
+  .convergence-node{ padding-left:22px; padding-right:22px; }
+  .hero-ticker{ gap:14px 22px; }
+}
