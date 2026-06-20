@@ -26,7 +26,8 @@
   "use strict";
 
   const RM  = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  // Lighter pixel ratio on phones keeps these canvas scenes smooth.
+  const DPR = Math.min(window.devicePixelRatio || 1, window.innerWidth < 760 ? 1.5 : 2);
   const mouse = { x: 0.5, y: 0.5, sx: 0.5, sy: 0.5 }; // 0..1
 
   window.addEventListener("pointermove", e => {

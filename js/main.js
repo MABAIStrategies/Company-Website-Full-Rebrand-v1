@@ -206,25 +206,33 @@
     if (img.complete && img.naturalWidth === 0) swap();
   });
 
-  /* ───────────── 12 · MOTION-BAND VIDEO — play only in view, honor reduced-motion ───────────── */
+  /* ───────────── 12 · MOTION-BAND VIDEO — robust muted autoplay when in view ───────────── */
   const bandVideos = document.querySelectorAll('.motion-band__video');
   if (bandVideos.length) {
-    if (reduceMotion) {
-      // Show a static first frame; never autoplay under reduced-motion.
-      bandVideos.forEach(v => { v.removeAttribute('autoplay'); v.pause && v.pause(); });
-    } else {
-      const vIO = new IntersectionObserver((entries) => {
-        entries.forEach((en) => {
-          const v = en.target;
-          if (en.isIntersecting) {
-            const p = v.play();
-            if (p && typeof p.catch === 'function') p.catch(() => {}); // ignore autoplay blocks
-          } else if (!v.paused) {
-            v.pause();
-          }
+    // Set muted/playsinline as PROPERTIES too — iOS/Safari require this for programmatic
+    // play(), not just the HTML attributes.
+    bandVideos.forEach((v) => {
+      v.muted = true; v.defaultMuted = true; v.setAttribute('muted', '');
+      v.playsInline = true; v.setAttribute('playsinline', '');
+    });
+    const tryPlay = (v) => {
+      const p = v.play();
+      if (p && typeof p.catch === 'function') {
+        p.catch(() => {
+          // Not buffered yet / autoplay nudge — retry once the frame is ready.
+          v.addEventListener('canplay', () => {
+            const q = v.play(); if (q && typeof q.catch === 'function') q.catch(() => {});
+          }, { once: true });
         });
-      }, { threshold: 0.25 });
-      bandVideos.forEach(v => vIO.observe(v));
-    }
+      }
+    };
+    const vIO = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        const v = en.target;
+        if (en.isIntersecting) tryPlay(v);
+        else if (!v.paused) v.pause();
+      });
+    }, { threshold: 0.1 });
+    bandVideos.forEach((v) => vIO.observe(v));
   }
 })();

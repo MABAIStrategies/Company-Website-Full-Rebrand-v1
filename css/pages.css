@@ -580,14 +580,39 @@ option{ background:#1a1d26; }
   .motion-band{ min-height:clamp(260px,58vw,360px); }
   .motion-band__copy{ padding:26px 22px; }
 
-  /* Chatbot: full-width sheet that fits short viewports */
+  /* Chatbot: contained bottom sheet (NOT full-screen), opens only on tap */
   #chatbot-trigger{ bottom:20px; right:18px; width:56px; height:56px; }
   #chatbot-panel{
-    left:14px; right:14px; bottom:88px; width:auto;
-    max-height:calc(100vh - 120px);
-    max-height:calc(100dvh - 120px);
+    left:14px; right:14px; bottom:86px; width:auto;
+    max-height:72vh; max-height:72dvh;
   }
-  .cb-body{ max-height:none; }
+  .cb-body{ max-height:46vh; max-height:46dvh; }
+}
+
+/* "The Descent" — the weaving pipeline SVG is hidden below 880px (it only lines up with
+   the desktop zig-zag), so render a centered multicolored spine + descending comet that
+   threads through the stacked phase discs. */
+@media (max-width: 880px){
+  .pipeline-wrap::before{
+    content:''; position:absolute; z-index:0;
+    top:26px; bottom:26px; left:50%; transform:translateX(-50%);
+    width:3px; border-radius:3px;
+    background:linear-gradient(to bottom,var(--cyan),var(--violet),var(--magenta),var(--gold),var(--lime));
+    box-shadow:0 0 18px rgba(0,229,255,.4);
+    opacity:.9;
+  }
+  .pipeline-wrap::after{
+    content:''; position:absolute; z-index:0; left:50%; margin-left:-5px; top:22px;
+    width:10px; height:10px; border-radius:50%; background:#fff;
+    box-shadow:0 0 14px var(--cyan),0 0 26px var(--violet),0 0 40px var(--magenta);
+    animation:descend-comet 4.6s var(--ease-out) infinite;
+  }
+}
+@keyframes descend-comet{
+  0%{ top:22px; opacity:0; }
+  10%{ opacity:1; }
+  90%{ opacity:1; }
+  100%{ top:calc(100% - 22px); opacity:0; }
 }
 
 @media (max-width: 440px){

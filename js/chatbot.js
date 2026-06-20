@@ -256,8 +256,11 @@
     if (isOpen && !panel.contains(e.target) && e.target !== trigger && !trigger.contains(e.target)) toggle();
   });
 
-  // Auto-open once with delay (only on first visit to any page, once per session)
-  if (!sessionStorage.getItem('cb_auto')) {
+  // Auto-open once with delay (desktop only — never auto-pop on phones/touch, where it
+  // would cover the screen). Mobile users tap the bubble when they want it.
+  const isSmallOrTouch = window.matchMedia('(max-width: 768px)').matches
+    || window.matchMedia('(hover: none)').matches;
+  if (!isSmallOrTouch && !sessionStorage.getItem('cb_auto')) {
     sessionStorage.setItem('cb_auto', '1');
     setTimeout(() => {
       if (!isOpen) toggle();

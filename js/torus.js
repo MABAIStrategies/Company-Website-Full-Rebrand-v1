@@ -9,7 +9,10 @@
   "use strict";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const IS_MOBILE = window.innerWidth < 760;
+  // Cap device-pixel-ratio harder on phones — full-screen canvases are fill-bound,
+  // so 1.5x instead of 2-3x roughly halves the per-frame work with little visible loss.
+  const DPR = Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1.5 : 2);
 
   /* ───────────────────────────────────────────────
      SHARED MOUSE STATE (smoothed)
@@ -81,8 +84,8 @@
   /* ═══════════════════════════════════════════════
      1 · BOOT TORUS INSTANCES
   ═══════════════════════════════════════════════ */
-  // Main hero torus (index.html)
-  buildTorus(document.getElementById("torus-canvas"), { particleCount: window.innerWidth < 760 ? 1400 : 2600, scale: 1, cy: 0.44 });
+  // Main hero torus (index.html) — fewer particles on phones for a smooth framerate
+  buildTorus(document.getElementById("torus-canvas"), { particleCount: IS_MOBILE ? 760 : 2600, scale: 1, cy: 0.44 });
   // Mini torus (sub-page heroes)
   const miniCfg = window.__MINI_TORUS__ || {};
   if (miniCfg.canvasId) buildTorus(document.getElementById(miniCfg.canvasId), { particleCount: miniCfg.particleCount || 800, scale: miniCfg.scale || 0.48, cy: 0.5 });
