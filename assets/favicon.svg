@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MAB AI">
+  <defs>
+    <linearGradient id="fSpectrum" x1="8" y1="12" x2="56" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00E5FF"/>
+      <stop offset="0.34" stop-color="#7C3AED"/>
+      <stop offset="0.64" stop-color="#FF3D8A"/>
+      <stop offset="0.84" stop-color="#FFD54A"/>
+      <stop offset="1" stop-color="#AEEA00"/>
+    </linearGradient>
+    <radialGradient id="fCore" cx="0.42" cy="0.36" r="0.7">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="0.3" stop-color="#9becff" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#00E5FF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="#0A0C10"/>
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+  <ellipse cx="32" cy="32" rx="20" ry="11" transform="rotate(-32 32 32)"
+           stroke="url(#fSpectrum)" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+  <ellipse cx="32" cy="32" rx="11.5" ry="20" transform="rotate(-32 32 32)"
+           stroke="url(#fSpectrum)" stroke-width="2.4" stroke-opacity="0.5" fill="none"/>
+  <circle cx="29.5" cy="28.5" r="7.5" fill="url(#fCore)"/>
+  <circle cx="48" cy="20" r="2.6" fill="#AEEA00"/>
+</svg>

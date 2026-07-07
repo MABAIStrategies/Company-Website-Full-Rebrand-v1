@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="MAB AI Strategies — The Agentic Enterprise">
+  <defs>
+    <linearGradient id="ogSpectrum" x1="120" y1="200" x2="320" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00E5FF"/><stop offset="0.32" stop-color="#7C3AED"/>
+      <stop offset="0.62" stop-color="#FF3D8A"/><stop offset="0.82" stop-color="#FFD54A"/>
+      <stop offset="1" stop-color="#AEEA00"/>
+    </linearGradient>
+    <linearGradient id="ogWord" x1="120" y1="0" x2="900" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00E5FF"/><stop offset="0.6" stop-color="#7DF9FF"/><stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+    <radialGradient id="ogGlowV" cx="0.2" cy="0.15" r="0.6"><stop offset="0" stop-color="#7C3AED" stop-opacity="0.45"/><stop offset="1" stop-color="#7C3AED" stop-opacity="0"/></radialGradient>
+    <radialGradient id="ogGlowC" cx="0.92" cy="0.9" r="0.6"><stop offset="0" stop-color="#00E5FF" stop-opacity="0.32"/><stop offset="1" stop-color="#00E5FF" stop-opacity="0"/></radialGradient>
+    <radialGradient id="ogCore" cx="0.4" cy="0.34" r="0.75"><stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/><stop offset="0.25" stop-color="#9becff" stop-opacity="0.5"/><stop offset="1" stop-color="#00E5FF" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#0A0C10"/>
+  <rect width="1200" height="630" fill="url(#ogGlowV)"/>
+  <rect width="1200" height="630" fill="url(#ogGlowC)"/>
+  <g transform="translate(150,150) scale(2.4)">
+    <ellipse cx="32" cy="32" rx="23" ry="13" transform="rotate(-32 32 32)" stroke="url(#ogSpectrum)" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+    <ellipse cx="32" cy="32" rx="13.5" ry="23" transform="rotate(-32 32 32)" stroke="url(#ogSpectrum)" stroke-width="2.4" stroke-opacity="0.55" fill="none"/>
+    <circle cx="29" cy="28" r="9" fill="url(#ogCore)"/>
+    <circle cx="51.5" cy="20" r="2.6" fill="#AEEA00"/>
+  </g>
+  <text x="150" y="430" font-family="'Space Grotesk','Inter',sans-serif" font-size="76" font-weight="700" letter-spacing="-1">
+    <tspan fill="#EDF1F7">MAB</tspan><tspan fill="url(#ogWord)">·AI</tspan><tspan fill="#EDF1F7"> Strategies</tspan>
+  </text>
+  <text x="152" y="486" font-family="'Inter',sans-serif" font-size="30" font-weight="300" fill="#9aa3b2">Converting chaos into consistency, and consistency into currency.</text>
+  <text x="152" y="548" font-family="'JetBrains Mono',monospace" font-size="20" letter-spacing="4" fill="#00E5FF">THE  AGENTIC  ENTERPRISE</text>
+</svg>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signal Lost (404) — MAB AI Strategies</title>
+<meta name="description" content="The page you're looking for has drifted out of orbit. Return to MAB AI Strategies.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A0C10">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/pages.css">
+<style>
+  .err-wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:120px 24px; text-align:center; }
+  .err-card{ max-width:620px; border-radius:32px; padding:clamp(40px,6vw,72px); }
+  .err-code{ font-family:var(--font-display); font-weight:700; font-size:clamp(4rem,14vw,8rem); line-height:1; margin-bottom:10px; }
+  .err-card p{ color:var(--ink-dim); font-weight:300; margin:14px auto 30px; max-width:460px; }
+  .err-actions{ display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+</style>
+</head>
+<body>
+
+<div id="cosmos" aria-hidden="true">
+  <div class="nebula nebula--violet"></div>
+  <div class="nebula nebula--cyan"></div>
+  <div class="nebula nebula--magenta"></div>
+  <div class="nebula nebula--lime"></div>
+  <canvas id="particle-field"></canvas>
+  <div class="grain-overlay"></div>
+</div>
+
+<header id="site-nav">
+  <nav class="nav-shell glass-sheet">
+    <a href="index.html" class="nav-brand" aria-label="MAB AI Strategies — home">
+      <span class="brand-orb"></span>
+      <span class="brand-word">MAB<em>·AI</em></span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="services.html" class="nav-link">Services</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="contact.html" class="nav-link nav-link--cta magnetic">Initiate Convergence</a></li>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<main>
+  <div class="err-wrap">
+    <div class="err-card glass-sheet">
+      <p class="section-eyebrow centered"><span class="eyebrow-dot magenta"></span>SIGNAL LOST</p>
+      <div class="err-code grad-aurora">404</div>
+      <h1 class="section-title" style="font-size:clamp(1.6rem,4vw,2.4rem);">This page drifted out of orbit.</h1>
+      <p>The route you requested doesn't exist — or has been re-architected. Let's get you back to signal.</p>
+      <div class="err-actions">
+        <a href="index.html" class="btn-convergence magnetic">
+          <span class="btn-label">Return Home <i class="fa-solid fa-house"></i></span>
+        </a>
+        <a href="contact.html" class="btn-ghost magnetic">Contact <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="js/torus.js" defer></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>

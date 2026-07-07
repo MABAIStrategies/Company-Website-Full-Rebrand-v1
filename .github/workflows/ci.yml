@@ -1,0 +1,116 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  validate:
+    name: Validate static site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: JavaScript syntax check (node --check)
+        run: |
+          set -e
+          for f in js/*.js; do
+            node --check "$f"
+            echo "ok  $f"
+          done
+
+      - name: Validate JSON, SVG, XML
+        run: |
+          python3 - <<'PY'
+          import json, glob, sys, xml.dom.minidom
+          errs = []
+          json.load(open('vercel.json'));                      print("ok  vercel.json")
+          for f in glob.glob('assets/*.svg') + ['sitemap.xml']:
+              try:
+                  xml.dom.minidom.parse(f); print("ok ", f)
+              except Exception as e:
+                  errs.append(f"{f}: {e}")
+          if errs:
+              print("\n".join(errs)); sys.exit(1)
+          PY
+
+      - name: HTML well-formedness (tag balance)
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          import glob, sys
+          VOID={'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}
+          class V(HTMLParser):
+              def __init__(s): super().__init__(); s.stack=[]; s.errs=[]
+              def handle_starttag(s,t,a):
+                  if t not in VOID: s.stack.append(t)
+              def handle_endtag(s,t):
+                  if t in VOID: return
+                  if s.stack and s.stack[-1]==t: s.stack.pop()
+                  elif t in s.stack:
+                      while s.stack and s.stack.pop()!=t: pass
+                  else: s.errs.append(f"stray </{t}>")
+          bad=False
+          for f in sorted(glob.glob('*.html')):
+              p=V(); p.feed(open(f,encoding='utf-8').read())
+              unclosed=[x for x in p.stack if x not in ('html','body','head')]
+              if unclosed or p.errs:
+                  bad=True; print(f"FAIL {f}: unclosed={unclosed} stray={p.errs}")
+              else:
+                  print(f"ok   {f}")
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Security & consistency regression guards
+        run: |
+          set -e
+          fail=0
+          check() {  # $1 = human label, $2 = regex
+            if grep -rInE "$2" --include=*.html --include=*.js --include=*.css . ; then
+              echo "::error::Regression — $1 found above"; fail=1
+            fi
+          }
+          # Dead webhook placeholder must never come back
+          check "dead webhook placeholder (REPLACE_WITH...)" 'REPLACE_WITH_YOUR_WEBHOOK_ID'
+          # Headshot must not hot-link the production logo file
+          check "hot-linked logo as headshot" 'OfficialCompanyLogo'
+          # Removed fake portal must stay removed
+          check "fake member-portal remnants" 'handlePortalLogin|tab=member|panel-member'
+          # Stale tier naming
+          check "stale tier name" 'Professional tier|Professional/Elite'
+          # CSP hardening: no inline scripts or inline event handlers allowed
+          if grep -rInE '<script>[^<]' --include=*.html . ; then
+            echo "::error::Inline <script> reintroduced — breaks strict CSP"; fail=1
+          fi
+          if grep -rInoE ' on(error|click|load|submit|change|mouse[a-z]+)=' --include=*.html . ; then
+            echo "::error::Inline event handler reintroduced — breaks strict CSP"; fail=1
+          fi
+          [ "$fail" = "0" ] && echo "✓ no regressions"
+          exit $fail
+
+      - name: Local asset references resolve
+        run: |
+          python3 - <<'PY'
+          import glob, re, os, sys
+          # Files allowed to be absent for now (provided just before launch)
+          PENDING = set()
+          pat = re.compile(r'(?:src|href)\s*=\s*"([^"]+)"')
+          missing=[]
+          for f in glob.glob('*.html') + glob.glob('css/*.css'):
+              txt=open(f,encoding='utf-8').read()
+              for ref in pat.findall(txt):
+                  if ref.startswith(('http://','https://','#','mailto:','tel:','data:')): continue
+                  ref=ref.split('?')[0].split('#')[0]
+                  if not ref or ref in PENDING: continue
+                  path=ref if os.path.exists(ref) else os.path.join(os.path.dirname(f), ref)
+                  if not os.path.exists(path):
+                      missing.append(f"{f} -> {ref}")
+          if missing:
+              print("Missing local references:"); print("\n".join(sorted(set(missing)))); sys.exit(1)
+          print("✓ all local css/js/asset/media references resolve")
+          PY
