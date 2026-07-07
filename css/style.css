@@ -629,6 +629,18 @@ section{ position:relative; padding:130px clamp(20px,5vw,64px); }
 }
 .footer-legal{ font-size:.74rem; color:var(--ink-faint); font-family:var(--font-mono); }
 
+.footer-policies{
+  flex-basis:100%;
+  display:flex; flex-wrap:wrap; justify-content:space-evenly; gap:10px 28px;
+  margin-top:6px; padding-top:22px;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.footer-policies a{
+  font-size:.76rem; font-family:var(--font-mono); letter-spacing:.06em;
+  color:var(--ink-faint); transition:color .25s, text-shadow .25s;
+}
+.footer-policies a:hover{ color:var(--cyan); text-shadow:0 0 10px rgba(0,229,255,.5); }
+
 /* ═══════════ SCROLL REVEAL ═══════════ */
 .reveal{
   opacity:0;
